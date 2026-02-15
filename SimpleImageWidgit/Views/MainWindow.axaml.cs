@@ -61,7 +61,7 @@ public partial class MainWindow : Window
         MainWindower.Width = maxWindowSize.X;
         MainWindower.Height = maxWindowSize.Y;
         
-        AddAPI("https://cataas.com/cat", "");
+        AddAPI("https://cataas.com/cat");
         AddAPI("https://some-random-api.com/animal/cat", "image");
         //AddAPI("https://files.catbox.moe/aiymm6.jpg", "");
         
@@ -81,7 +81,7 @@ public partial class MainWindow : Window
         //Task.Run(Silly);
     }
     
-    void AddAPI(string url, string path)
+    void AddAPI(string url, string path="")
     {
         Dictionary<string, string> coolish = new Dictionary<string, string>();
         coolish.Add("url", url);
