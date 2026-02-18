@@ -47,6 +47,8 @@ public partial class MainWindow : Window
     private bool helder = false;
     private bool stopImageThing = false;
     
+    string outputDir = Path.Combine(Path.GetTempPath(), "cat");
+    
     public MainWindow()
     {
         InitializeComponent();
@@ -60,25 +62,18 @@ public partial class MainWindow : Window
         
         MainWindower.Width = maxWindowSize.X;
         MainWindower.Height = maxWindowSize.Y;
-        
+
         AddAPI("https://cataas.com/cat");
         AddAPI("https://some-random-api.com/animal/cat", "image");
         //AddAPI("https://files.catbox.moe/aiymm6.jpg", "");
-        
-        Console.WriteLine(apiList.Count);
 
         loadingImage = new Bitmap(AssetLoader.Open(new Uri("avares://SimpleImageWidgit/Assets/lildude.png")));
         errorImage = new Bitmap(AssetLoader.Open(new Uri("avares://SimpleImageWidgit/Assets/thinggoboom.png")));
-        
+
         MainWindower.Show();
         MainWindower.Topmost = true;
-        
-        Console.WriteLine("Opp: "+MainWindower.Opacity.ToString());
-        
+
         Task.Run(BackgroundUpdates);
-        
-        //MainWindower.Background = new SolidColorBrush(Colors.Black);
-        //Task.Run(Silly);
     }
     
     void AddAPI(string url, string path="")
@@ -92,13 +87,13 @@ public partial class MainWindow : Window
     
     string GetImage(Dictionary<string, string> api)
     {
-        string outputDir = Path.Combine(Path.GetTempPath(), "cat");
         if (!Directory.Exists(outputDir))
         {
             Directory.CreateDirectory(outputDir);
         }
-        string imgThingggggg = Path.Combine(outputDir, Path.GetRandomFileName());
 
+        string imgThingggggg = Path.Combine(outputDir, Path.GetRandomFileName());
+        
         Console.WriteLine("Output Path: "+imgThingggggg);
         Console.WriteLine("API URL: "+api["url"]);
         Console.WriteLine("API Path: "+api["path"]);
@@ -134,30 +129,6 @@ public partial class MainWindow : Window
     {
         return (int)DateTime.Now.TimeOfDay.TotalSeconds;
     }
-
-    async void SetWindowSize(int x, int y)
-    {
-        await Dispatcher.UIThread.InvokeAsync(async () =>
-        {
-            MainWindower.Height = x;
-            MainWindower.Width = y;
-        });
-    }
-
-    private async Task Silly()
-    {
-        while (true)
-        {
-            for (int iH = 1; iH > Screens.Primary.Bounds.Height; iH++)
-            {
-                for (int iW = 1; iW > Screens.Primary.Bounds.Width; iW++)
-                {
-                    SetWindowSize(iH, iW);
-                    Console.WriteLine($"{iW}x{iH}");
-                }
-            }
-        }
-    }
     
     async void HandleKey(object sender, KeyEventArgs e)
     {
@@ -188,14 +159,6 @@ public partial class MainWindow : Window
             Console.WriteLine("Getting new image...");
         }
     }
-
-    private async void MoveWindow(int x, int y)
-    {
-        await Dispatcher.UIThread.InvokeAsync(async () =>
-        {
-            MainWindower.Position = new PixelPoint(x, y);
-        });
-    }
     
     private async void BackgroundUpdates()
     {
@@ -216,26 +179,6 @@ public partial class MainWindow : Window
                     await Dispatcher.UIThread.InvokeAsync(async () =>
                         {
                             ImgThing.Source = cool;
-                            /*
-
-                            if (cool.Size.Height < maxWindowSize.Y)
-                            {
-                                MainWindower.Height = cool.Size.Height;
-                            } else
-                            {
-                                MainWindower.Height = maxWindowSize.Y;
-                            }
-                            if (cool.Size.Width < maxWindowSize.X)
-                            {
-                                MainWindower.Width = cool.Size.Width;
-                            }
-                            else
-                            {
-                                MainWindower.Width = maxWindowSize.X;
-                            }
-                            ImgThing.Width = MainWindower.Width;
-                            ImgThing.Height = MainWindower.Height;
-                            */
                         }
                     );
 
@@ -319,5 +262,10 @@ public partial class MainWindow : Window
     {
         MainWindower.Opacity = 1;
         helder = false;
+    }
+
+    private void TopLevel_OnClosed(object? sender, EventArgs e)
+    {
+        Directory.Delete(outputDir);
     }
 }

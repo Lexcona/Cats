@@ -16,6 +16,7 @@
         ExtendClientAreaChromeHints="NoChrome"
         ExtendClientAreaTitleBarHeightHint="-1"
         SystemDecorations="BorderOnly"
+        Closed="TopLevel_OnClosed"
         >
 
     <Design.DataContext>
