@@ -5,8 +5,6 @@ It will show a new cat image every 10 seconds. From 2 different APIS.
 - https://cataas.com/cat
 - https://some-random-api.com/animal/cat
 
-Note, for the current version it does download every image to your temp folder, this is something I will fix later.\
-
 ## Keybinds
 F1 - DvD Bouncing Mode (why not)
 F2 - Stop Getting New Images
