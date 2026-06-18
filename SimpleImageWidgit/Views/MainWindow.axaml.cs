@@ -207,7 +207,7 @@ public partial class MainWindow : Window
 
                         if (nextX <= Screens.Primary.WorkingArea.X)
                         {
-                            newX = (int)Screens.Primary.WorkingArea.X;
+                            newX = Screens.Primary.WorkingArea.X;
                             velocity = new Vector2(Math.Abs(velocity.X), velocity.Y);  
 
                         }
@@ -221,7 +221,7 @@ public partial class MainWindow : Window
 
                         if (nextY <= Screens.Primary.WorkingArea.Y)
                         {
-                            newY = (int)Screens.Primary.WorkingArea.Y;
+                            newY = Screens.Primary.WorkingArea.Y;
                             velocity = new Vector2(velocity.X, Math.Abs(velocity.Y));  
 
                         }
@@ -267,6 +267,6 @@ public partial class MainWindow : Window
 
     private void TopLevel_OnClosed(object? sender, EventArgs e)
     {
-        Directory.Delete(outputDir);
+        Directory.Delete(outputDir, true);
     }
 }
