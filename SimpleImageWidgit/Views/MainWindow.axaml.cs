@@ -172,6 +172,7 @@ public partial class MainWindow : Window
                     Bitmap cool = new Bitmap(
                         currentImg
                     );
+                    File.Delete(currentImg);
 
                     Console.WriteLine($"Img Size: {cool.Size.Width}x{cool.Size.Height}");
                     Console.WriteLine($"Img DPI: {cool.Dpi.X}x{cool.Dpi.Y}");
